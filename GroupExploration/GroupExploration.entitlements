@@ -2,6 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!--
+		GroupExploration.entitlements - SharePlay System Capabilities
+
+		This entitlements file grants the GroupExploration app permission to use
+		SharePlay functionality for spatial collaboration in visionOS 26.
+
+		Critical Entitlement:
+		- com.apple.developer.group-session: Required for SharePlay functionality
+
+		Requirements:
+		- Must be configured in Xcode project settings
+		- Requires paid Apple Developer account
+		- Cannot be added post-build (requires proper signing)
+
+		Reference:
+		https://developer.apple.com/documentation/xcode/adding_capabilities_to_your_app
+
+		Last Updated: visionOS 26 SharePlay Implementation
+	-->
 	<key>com.apple.developer.group-session</key>
 	<true/>
 </dict>
