@@ -21,8 +21,8 @@ struct GroupExplorationApp: App {
                 ContentView()
                     .environment(appModel)
                     .handlesExternalEvents(
-                        preferring: ["group-exploration"],
-                        allowing: ["group-exploration"]
+                        preferring: [GroupExplorationActivity.activityIdentifier],
+                        allowing: [GroupExplorationActivity.activityIdentifier]
                     )
             }
         }
@@ -31,26 +31,18 @@ struct GroupExplorationApp: App {
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
             ImmersiveView()
                 .environment(appModel)
-                .handlesExternalEvents(
-                    preferring: ["group-exploration"],
-                    allowing: ["group-exploration"]
-                )
                 .onAppear {
                     appModel.immersiveSpaceState = .open
                     avPlayerViewModel.play()
-
-                    // Handle scene association for SharePlay
-                    if appModel.isSharePlayActive {
-                        Task {
-                            // TODO: Implement state synchronization
-                            print("Scene association: SharePlay session active")
-                        }
-                    }
                 }
                 .onDisappear {
                     appModel.immersiveSpaceState = .closed
                     avPlayerViewModel.reset()
                 }
+                .handlesExternalEvents(
+                  preferring: [],
+                  allowing: [GroupExplorationActivity.activityIdentifier]
+                )
         }
         .immersionStyle(selection: .constant(.progressive), in: .progressive)
     }
