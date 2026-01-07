@@ -6,45 +6,18 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Identifier</key>
 	<string>com.apple.dt.unit.visionOS.app.SharePlaySpatial</string>
+	<key>Concrete</key>
+	<true/>
+	<key>Description</key>
+	<string>A visionOS app with SharePlay integration for shared spatial experiences. Includes GroupActivity, session management, and immersive space support.</string>
 	<key>Ancestors</key>
 	<array>
-		<string>com.apple.dt.unit.applicationBase</string>
-		<string>com.apple.dt.unit.visionOS.base</string>
+		<string>com.apple.dt.unit.visionOS.app.base</string>
 	</array>
 	<key>NameOfInitialFileForEditor</key>
 	<string>ContentView.swift</string>
 	<key>SortOrder</key>
 	<integer>50</integer>
-	<key>Targets</key>
-	<array>
-		<dict>
-			<key>TargetIdentifier</key>
-			<string>com.apple.dt.visionOS.applicationTarget</string>
-			<key>SharedSettings</key>
-			<dict>
-				<key>ENABLE_PREVIEWS</key>
-				<string>YES</string>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME</key>
-				<string>AccentColor</string>
-				<key>CODE_SIGN_ENTITLEMENTS</key>
-				<string>___PACKAGENAME___.entitlements</string>
-				<key>INFOPLIST_FILE</key>
-				<string>___PACKAGENAME___/Info.plist</string>
-				<key>GENERATE_INFOPLIST_FILE</key>
-				<string>YES</string>
-				<key>SUPPORTS_MACCATALYST</key>
-				<string>NO</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>7</string>
-				<key>SWIFT_EMIT_LOC_STRINGS</key>
-				<string>YES</string>
-				<key>ASSETCATALOG_COMPILER_COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-			</dict>
-		</dict>
-	</array>
 	<key>Options</key>
 	<array>
 		<dict>
@@ -183,10 +156,8 @@
 	</dict>
 	<key>Image</key>
 	<dict>
-		<key>BundleImageName</key>
-		<string>visionpro</string>
-		<key>BundleIdentifier</key>
-		<string>com.apple.dt.IDEKit</string>
+		<key>SystemSymbolName</key>
+		<string>person.3.fill</string>
 	</dict>
 </dict>
 </plist>
