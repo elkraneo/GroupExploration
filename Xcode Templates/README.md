@@ -28,173 +28,84 @@ A visionOS 26 Xcode project template for building apps with SharePlay group acti
 
 ---
 
-## What's NOT Included (Post-Setup Required)
+## Post-Setup Requirements
 
-### 1. AVPlayer Video Playback
+After creating a project from this template, you must manually configure the following:
 
-The template does **not** include AVPlayer integration. To add video playback:
+### 1. Xcode Project Settings
 
-**Add these files:**
+| Setting | Required Value | Purpose |
+|---------|----------------|---------|
+| **Development Team** | Your Apple Developer team ID | Code signing |
+| **Product Bundle Identifier** | `com.yourcompany.YourAppName` | App identification |
+| **XROS Deployment Target** | `26.1` or later | SDK version |
+| **Supported Platforms** | `xros xrsimulator` | Target platforms |
+| **Code Signing Entitlements** | `YourAppName/YourAppName.entitlements` | Capability reference |
 
-```
-AVPlayerViewModel.swift:
-```swift
-import AVKit
+### 2. Swift Compiler Settings
 
-@MainActor
-@Observable
-class AVPlayerViewModel: NSObject {
-    var isPlaying: Bool = false
-    private var avPlayerViewController: AVPlayerViewController?
-    private var avPlayer = AVPlayer()
-    private let videoURL: URL? = {
-        Bundle.main.url(forResource: "MyVideo", withExtension: "mp4")
-    }()
+Add these Swift Compiler - Language settings in Build Settings:
 
-    func makePlayerViewController() -> AVPlayerViewController {
-        let avPlayerViewController = AVPlayerViewController()
-        avPlayerViewController.player = avPlayer
-        avPlayerViewController.delegate = self
-        self.avPlayerViewController = avPlayerViewController
-        return avPlayerViewController
-    }
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| **Swift Approachable Concurrency** | `YES` | Enable @MainActor inference |
+| **Swift Default Actor Isolation** | `MainActor` | Default actor isolation policy |
+| **Member Import Visibility** | `Enabled` | Swift 6 feature flag |
 
-    func play() {
-        guard !isPlaying, let videoURL else { return }
-        isPlaying = true
-        let item = AVPlayerItem(url: videoURL)
-        avPlayer.replaceCurrentItem(with: item)
-        avPlayer.play()
-    }
+### 3. Capabilities
 
-    func reset() {
-        guard isPlaying else { return }
-        isPlaying = false
-        avPlayer.replaceCurrentItem(with: nil)
-    }
-}
+The template includes the entitlements file, but you must enable the capability:
 
-extension AVPlayerViewModel: AVPlayerViewControllerDelegate {
-    nonisolated func playerViewController(
-        _ playerViewController: AVPlayerViewController,
-        willEndFullScreenPresentationWithAnimationCoordinator coordinator: UIViewControllerTransitionCoordinator
-    ) {
-        Task { @MainActor in reset() }
-    }
-}
-```
+1. Open your project in Xcode
+2. Select your target
+3. Go to **Signing & Capabilities**
+4. Click **+ Capability**
+5. Search for **Group Session (SharePlay)**
+6. The `com.apple.developer.group-session` entitlement should appear
 
-```
-AVPlayerView.swift:
-```swift
-import SwiftUI
+### 4. Package Dependencies
 
-struct AVPlayerView: UIViewControllerRepresentable {
-    let viewModel: AVPlayerViewModel
+The original project includes **RealityKitContent** as a Swift Package dependency:
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        return viewModel.makePlayerViewController()
-    }
+**To add:**
+1. File → Add Package Dependencies
+2. Select **RealityKitContent**
+3. Add to your target
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
+**Purpose:** Provides RealityKit content with default immersive environment (Ground, SkyDome, etc.)
+
+### 5. Info.plist Configuration
+
+Update your Info.plist with the following:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationPreferredDefaultSceneSessionRole</key>
+        <string>UIWindowSceneSessionRoleApplication</string>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <true/>
+        <key>UISceneConfigurations</key>
+        <dict/>
+    </dict>
+</dict>
+</plist>
 ```
 
-**Update AppModel.swift:**
-```swift
-@MainActor
-@Observable
-class AppModel {
-    let immersiveSpaceID = "ImmersiveSpace"
-    let sharePlayManager = SharePlayManager()
-    let avPlayerViewModel = AVPlayerViewModel()
-
-    enum ImmersiveSpaceState {
-        case closed
-        case inTransition
-        case open
-    }
-
-    var immersiveSpaceState = ImmersiveSpaceState.closed
-}
-```
-
-**Update ___PROJECTNAMEASIDENTIFIER___App.swift:**
-```swift
-WindowGroup {
-    if avPlayerViewModel.isPlaying {
-        AVPlayerView(viewModel: avPlayerViewModel)
-    } else {
-        ContentView()
-            .environment(appModel)
-            .handlesExternalEvents(...)
-    }
-}
-```
-
----
-
-### 2. Documentation
-
-The template uses minimal inline documentation. For production apps, consider adding:
-
-- WWDC session references (10111, 10087, 10201, etc.)
-- Architecture explanations
-- Error handling guidance
-- State machine documentation
-
----
-
-### 3. Info.plist Customization
-
-The template's Info.plist includes minimal settings. Add:
-
-- `UILaunchScreen` configuration for app startup experience
+**Note:** The template's Info.plist is minimal. You may need to add:
+- `UILaunchScreen` for startup experience
 - Custom URL schemes for deep linking
-- Device capability requirements
+- Privacy usage descriptions if accessing cameras, photos, etc.
 
----
+### 6. Code Signing
 
-## Installation
+For SharePlay to work:
 
-```bash
-./install-xcode-template.sh
-```
-
-Then restart Xcode and create a new project:
-- File → New → Project
-- Select **visionOS** → **Application**
-- Choose **SharePlay Spatial Experience**
-
-## Template Structure
-
-```
-SharePlay Spatial Experience.xctemplate/
-├── TemplateInfo.plist           # Metadata & configuration
-├── ___PROJECTNAMEASIDENTIFIER___App.swift
-├── ___PROJECTNAMEASIDENTIFIER___Activity.swift
-├── SharePlayManager.swift
-├── ContentView.swift
-├── AppModel.swift
-├── ImmersiveView.swift
-├── ToggleImmersiveSpaceButton.swift
-├── Info.plist
-├── ___PROJECTNAME___.entitlements
-└── Assets.xcassets/
-    ├── AppIcon.solidimagestack/
-    └── AccentColor.colorset/
-```
-
-## Requirements
-
-- Xcode 26+
-- visionOS 26 SDK
-- Paid Apple Developer account (for SharePlay capabilities)
-- FaceTime-enabled device for testing SharePlay
-
-## References
-
-- [Build spatial SharePlay experiences - WWDC 2023](https://developer.apple.com/videos/play/wwdc2023/10087)
-- [Customize spatial Persona templates - WWDC 2024](https://developer.apple.com/videos/play/wwdc2024/10201)
-- [Go beyond the window with SwiftUI - WWDC 2023](https://developer.apple.com/videos/play/wwdc2023/10111)
-- [GroupActivities Documentation](https://developer.apple.com/documentation/GroupActivities)
+1. **Paid Apple Developer Account** required
+2. Valid **Team ID** must be set in Signing & Capabilities
+3. App must be built with a **valid provisioning profile**
+4. Testing requires a **physical visionOS device** or simulator with FaceTime
