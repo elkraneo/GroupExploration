@@ -2,7 +2,7 @@
 
 set -e
 
-TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/Project Templates/MultiPlatform/Application/SharePlay Spatial Experience.xctemplate"
+TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/Project Templates/visionOS/Application/SharePlay Spatial Experience.xctemplate"
 
 echo "Installing SharePlay Spatial Experience Xcode template..."
 
@@ -21,7 +21,7 @@ if [ -d "$TEMPLATE_SOURCE" ]; then
     echo "To use the template:"
     echo "1. Restart Xcode if it's running"
     echo "2. Create a new project (File > New > Project)"
-    echo "3. Select 'MultiPlatform' > 'Application'"
+    echo "3. Select 'visionOS' > 'Application'"
     echo "4. Choose 'SharePlay Spatial Experience'"
 else
     echo "Error: Template source directory not found at: $TEMPLATE_SOURCE"

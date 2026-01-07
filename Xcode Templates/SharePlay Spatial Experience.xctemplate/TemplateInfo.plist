@@ -5,11 +5,11 @@
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Identifier</key>
-	<string>com.apple.dt.unit.crossPlatform.visionOS.SharePlaySpatial</string>
+	<string>com.apple.dt.unit.visionOS.app.SharePlaySpatial</string>
 	<key>Ancestors</key>
 	<array>
-		<string>com.apple.dt.unit.applicationBase.SwiftUI</string>
-		<string>com.apple.dt.unit.crossPlatform.visionOS.base</string>
+		<string>com.apple.dt.unit.applicationBase</string>
+		<string>com.apple.dt.unit.visionOS.base</string>
 	</array>
 	<key>NameOfInitialFileForEditor</key>
 	<string>ContentView.swift</string>
@@ -19,7 +19,7 @@
 	<array>
 		<dict>
 			<key>TargetIdentifier</key>
-			<string>com.apple.dt.applicationTarget</string>
+			<string>com.apple.dt.visionOS.applicationTarget</string>
 			<key>SharedSettings</key>
 			<dict>
 				<key>ENABLE_PREVIEWS</key>
@@ -47,38 +47,6 @@
 	</array>
 	<key>Options</key>
 	<array>
-		<dict>
-			<key>Identifier</key>
-			<string>languageChoice</string>
-			<key>Override</key>
-			<string>Swift</string>
-		</dict>
-		<dict>
-			<key>Identifier</key>
-			<string>appLifecycle</string>
-			<key>Override</key>
-			<string>SwiftUI</string>
-		</dict>
-		<dict>
-			<key>Identifier</key>
-			<string>storageType</string>
-			<key>Override</key>
-			<string>None</string>
-		</dict>
-		<dict>
-			<key>Identifier</key>
-			<string>hostInCloudKit</string>
-			<key>Override</key>
-			<string>false</string>
-		</dict>
-		<dict>
-			<key>Identifier</key>
-			<string>userInterface</string>
-			<key>Override</key>
-			<string>SwiftUI</string>
-			<key>Description</key>
-			<string>The type of user interface.</string>
-		</dict>
 		<dict>
 			<key>Identifier</key>
 			<string>immersiveStyle</string>
